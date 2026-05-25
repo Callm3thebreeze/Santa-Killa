@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" role="img" aria-labelledby="title desc">
+  <title id="title">Tablas de surf</title>
+  <desc id="desc">Placeholder de tablas de surf alineadas antes de una clase</desc>
+  <rect width="560" height="420" fill="#f6f5f2"/>
+  <path d="M0 260c94 24 178 17 253-20 87-43 188-45 307 0v180H0z" fill="#dedbd4"/>
+  <g transform="translate(70 56)" fill="none" stroke="#111" stroke-width="10" opacity=".88">
+    <path d="M58 0c38 70 38 198 0 300C20 198 20 70 58 0z" fill="#f8f8f6"/>
+    <path d="M188 0c38 70 38 198 0 300-38-102-38-230 0-300z" fill="#f8f8f6"/>
+    <path d="M318 0c38 70 38 198 0 300-38-102-38-230 0-300z" fill="#f8f8f6"/>
+    <path d="M58 42v212M188 42v212M318 42v212" stroke-width="4"/>
+  </g>
+</svg>

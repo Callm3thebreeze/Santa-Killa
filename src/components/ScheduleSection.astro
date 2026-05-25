@@ -1,0 +1,108 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { schedule } from "@data/schedule";
+---
+
+<section id="horario" class="schedule section">
+  <div class="schedule__inner container">
+    <div>
+      <SectionHeading
+        eyebrow="Horario"
+        title="Sesiones guiadas por el mar, no por una plantilla"
+        intro="Los horarios pueden adaptarse según mareas, viento y condiciones del mar. Te confirmaremos la mejor franja para que la clase sea segura y útil."
+      />
+    </div>
+
+    <div class="schedule__panel" data-reveal>
+      <h3>Atención y reservas</h3>
+      <dl>
+        {
+          schedule.map((item) => (
+            <div class="schedule__row">
+              <dt>{item.day}</dt>
+              <dd>{item.hours}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p>
+        Si vienes a El Palmar varios días, podemos ayudarte a elegir el mejor
+        momento para aprender surf según la previsión.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .schedule__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.68fr);
+    gap: clamp(42px, 7vw, 96px);
+    align-items: start;
+  }
+
+  .schedule__panel {
+    padding: clamp(24px, 4vw, 42px);
+    background: var(--color-black);
+    border-radius: var(--radius-card);
+    color: var(--color-white);
+  }
+
+  h3 {
+    margin-bottom: 30px;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 640;
+    letter-spacing: 0;
+    line-height: 0.98;
+  }
+
+  dl {
+    display: grid;
+  }
+
+  .schedule__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding-block: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .schedule__row:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  dt {
+    font-weight: 750;
+  }
+
+  dd {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    text-align: right;
+  }
+
+  .schedule__panel p {
+    margin-top: 28px;
+    color: rgba(255, 255, 255, 0.74);
+    line-height: 1.75;
+  }
+
+  @media (max-width: 880px) {
+    .schedule__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .schedule__row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    dd {
+      text-align: left;
+    }
+  }
+</style>

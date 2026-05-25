@@ -1,0 +1,87 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { faqs } from "@data/faqs";
+---
+
+<section class="faq section" aria-labelledby="faq-title">
+  <div class="faq__inner container">
+    <div>
+      <SectionHeading
+        eyebrow="Preguntas frecuentes"
+        title="Antes de reservar tu clase de surf"
+        intro="Resolvemos las dudas habituales para que llegues a El Palmar con todo claro y puedas centrarte en disfrutar del agua."
+      />
+    </div>
+
+    <div class="faq__items" data-reveal>
+      {
+        faqs.map((item, index) => (
+          <details class="faq__item" open={index === 0}>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.76fr) minmax(420px, 1fr);
+    gap: clamp(42px, 7vw, 96px);
+    align-items: start;
+  }
+
+  .faq__items {
+    display: grid;
+    border-top: 1px solid rgba(10, 10, 10, 0.12);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid rgba(10, 10, 10, 0.12);
+  }
+
+  summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 24px 44px 24px 0;
+    position: relative;
+    color: var(--color-black);
+    font-weight: 760;
+    line-height: 1.35;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: "+";
+    position: absolute;
+    top: 23px;
+    right: 4px;
+    color: var(--color-gray-600);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  details[open] summary::after {
+    content: "-";
+  }
+
+  .faq__item p {
+    max-width: 680px;
+    padding: 0 0 24px;
+    color: var(--color-gray-600);
+    line-height: 1.75;
+  }
+
+  @media (max-width: 900px) {
+    .faq__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

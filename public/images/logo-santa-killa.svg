@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 190" role="img" aria-labelledby="title desc">
+  <title id="title">Santa Killa</title>
+  <desc id="desc">Logotipo placeholder de Santa Killa Surf School</desc>
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M84 64c36-30 72-30 108 0s72 30 108 0" stroke-width="7"/>
+    <path d="M102 87c29-20 58-20 87 0s58 20 87 0" stroke-width="4" opacity=".82"/>
+    <path d="M132 112c20-12 40-12 60 0s40 12 60 0" stroke-width="3" opacity=".7"/>
+  </g>
+  <text x="210" y="145" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="54" font-weight="700" letter-spacing="0">Santa Killa</text>
+  <text x="210" y="170" text-anchor="middle" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="7">SURF SCHOOL</text>
+</svg>

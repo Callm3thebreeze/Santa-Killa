@@ -1,0 +1,169 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { contact } from "@data/contact";
+---
+
+<section id="ubicacion" class="contact section section--muted">
+  <div class="contact__inner container">
+    <div class="contact__content" id="contacto">
+      <SectionHeading
+        eyebrow="Ubicación y contacto"
+        title="Surf en El Palmar, Cádiz, con reserva sencilla"
+        intro="Escríbenos para consultar disponibilidad, nivel de la clase y condiciones previstas. Mantenemos una comunicación clara antes de entrar al agua."
+      />
+
+      <address class="contact__details" data-reveal>
+        <p><span>Zona</span>{contact.location}</p>
+        <p>
+          <span>Teléfono</span><a
+            href={`tel:${contact.phone.replaceAll(" ", "")}`}
+            >{contact.phone}</a>
+        </p>
+        <p>
+          <span>Email</span><a href={`mailto:${contact.email}`}
+            >{contact.email}</a>
+        </p>
+      </address>
+
+      <div class="contact__actions" data-reveal>
+        <a
+          class="contact__primary"
+          href={contact.whatsapp}
+          target="_blank"
+          rel="noreferrer">Reservar por WhatsApp</a
+        >
+        <a
+          class="text-link"
+          href={contact.mapsExternalUrl}
+          target="_blank"
+          rel="noreferrer">Abrir en Google Maps</a
+        >
+      </div>
+    </div>
+
+    <div class="contact__map" data-reveal>
+      <iframe
+        title="Mapa de Google Maps con la ubicación de Santa Killa en El Palmar, Cádiz"
+        src={contact.mapUrl}
+        width="640"
+        height="520"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
+      <p>
+        Mapa integrado de El Palmar, Cádiz. Si no se carga correctamente, puedes
+        consultar la ubicación en el enlace externo a Google Maps.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(460px, 1fr);
+    gap: clamp(42px, 7vw, 92px);
+    align-items: center;
+  }
+
+  .contact__details {
+    display: grid;
+    gap: 16px;
+    margin-top: 34px;
+  }
+
+  .contact__details p {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 20px;
+    padding-block: 16px;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+  }
+
+  .contact__details span {
+    color: var(--color-gray-600);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .contact__details a {
+    text-decoration: none;
+  }
+
+  .contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    margin-top: 34px;
+  }
+
+  .contact__primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 15px 20px;
+    color: var(--color-white);
+    background: var(--color-black);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-soft);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background-color 180ms var(--ease-out),
+      color 180ms var(--ease-out);
+  }
+
+  .contact__primary:hover {
+    color: var(--color-black);
+    background: transparent;
+  }
+
+  .contact__map {
+    overflow: hidden;
+    background: var(--color-white);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+  }
+
+  iframe {
+    width: 100%;
+    min-height: 520px;
+    border: 0;
+    filter: grayscale(1) contrast(1.03);
+  }
+
+  .contact__map p {
+    padding: 18px 20px 20px;
+    color: var(--color-gray-600);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 960px) {
+    .contact__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .contact__details p {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .contact__actions a {
+      width: 100%;
+    }
+
+    iframe {
+      min-height: 390px;
+    }
+  }
+</style>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 720" role="img" aria-labelledby="title desc">
+  <title id="title">Olas suaves en El Palmar</title>
+  <desc id="desc">Placeholder de playa abierta con olas suaves en El Palmar para clases de surf</desc>
+  <rect width="1040" height="720" fill="#f7f7f4"/>
+  <path d="M0 0h1040v352H0z" fill="#dce7e3"/>
+  <path d="M0 272c140 36 274 36 402 0 172-49 314-44 462 13 62 24 121 39 176 45v390H0z" fill="#ffffff" opacity=".74"/>
+  <path d="M0 386c160 34 306 24 438-30 159-65 327-62 602 12v352H0z" fill="#d8d6ce"/>
+  <path d="M0 495c211 26 390 10 537-49 139-55 307-51 503 12v262H0z" fill="#f8f8f6"/>
+  <path d="M682 198c68 0 123 55 123 123" fill="none" stroke="#111" stroke-width="14" stroke-linecap="round" opacity=".86"/>
+  <path d="M682 198c-74 0-134 60-134 134 0 52 30 97 74 120-14-38-6-80 24-110 35-35 88-40 128-16 20 12 30 19 31 19" fill="none" stroke="#111" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity=".86"/>
+</svg>

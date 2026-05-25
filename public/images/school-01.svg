@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 980" role="img" aria-labelledby="title desc">
+  <title id="title">Instructor en la playa</title>
+  <desc id="desc">Placeholder editorial de un instructor de surf preparando una clase en El Palmar</desc>
+  <rect width="780" height="980" fill="#f4f1ea"/>
+  <path d="M0 0h780v440H0z" fill="#dfe8e5"/>
+  <path d="M0 350c110 42 218 48 324 18 160-45 261-50 406 10 18 8 35 14 50 18v584H0z" fill="#f7f7f4"/>
+  <path d="M0 552c134 28 253 20 357-24 126-54 245-52 423 8v444H0z" fill="#dedbd4"/>
+  <path d="M420 360c78 110 107 224 88 342-18 113-77 190-177 232-18-151 0-279 53-384 26-51 38-114 36-190z" fill="#151515" opacity=".88"/>
+  <circle cx="418" cy="314" r="38" fill="#151515" opacity=".88"/>
+  <path d="M258 466c-54 88-84 183-90 285" stroke="#151515" stroke-width="22" stroke-linecap="round" opacity=".88"/>
+  <path d="M536 474c38 73 60 152 66 236" stroke="#151515" stroke-width="20" stroke-linecap="round" opacity=".88"/>
+</svg>

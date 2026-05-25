@@ -1,0 +1,97 @@
+---
+import Header from "@components/Header.astro";
+import Hero from "@components/Hero.astro";
+import IntroSection from "@components/IntroSection.astro";
+import PricingSection from "@components/PricingSection.astro";
+import ScheduleSection from "@components/ScheduleSection.astro";
+import SeoContentSection from "@components/SeoContentSection.astro";
+import ContactSection from "@components/ContactSection.astro";
+import FaqSection from "@components/FaqSection.astro";
+import Footer from "@components/Footer.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { contact } from "@data/contact";
+import { faqs } from "@data/faqs";
+import { pricing } from "@data/pricing";
+
+const title = "Santa Killa | Escuela de surf en El Palmar, Cádiz";
+const description =
+  "Escuela de surf en El Palmar, Cádiz. Clases de surf para todos los niveles en un entorno seguro, cercano y junto al Atlántico.";
+const siteUrl = Astro.site ?? new URL("https://www.santakilla.com");
+
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  name: "Santa Killa",
+  url: new URL("/", siteUrl).toString(),
+  logo: new URL("/images/logo-santa-killa.svg", siteUrl).toString(),
+  image: new URL("/images/hero-poster.svg", siteUrl).toString(),
+  description,
+  telephone: contact.phone,
+  email: contact.email,
+  priceRange: "30 EUR - 140 EUR",
+  inLanguage: "es-ES",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "El Palmar",
+    addressRegion: "Cádiz",
+    addressCountry: "ES",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: contact.latitude,
+    longitude: contact.longitude,
+  },
+  areaServed: ["El Palmar", "Cádiz", "Costa de la Luz"],
+  openingHours: ["Mo-Fr 09:00-19:00", "Sa 09:00-14:00"],
+  sameAs: [contact.mapsExternalUrl],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Clases de surf Santa Killa",
+    itemListElement: pricing.map((item) => ({
+      "@type": "Offer",
+      name: item.title,
+      description: item.description,
+      price: item.price.replace(/[^0-9]/g, ""),
+      priceCurrency: "EUR",
+      availability: "https://schema.org/InStock",
+      itemOffered: {
+        "@type": "Service",
+        name: item.title,
+        serviceType: "Clases de surf en El Palmar",
+        areaServed: "El Palmar, Cádiz",
+      },
+    })),
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  jsonLd={[businessSchema, faqSchema]}
+>
+  <Header />
+  <main id="main-content">
+    <Hero />
+    <IntroSection />
+    <PricingSection />
+    <ScheduleSection />
+    <SeoContentSection />
+    <ContactSection />
+    <FaqSection />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Playa de El Palmar al atardecer</title>
+  <desc id="desc">Poster placeholder con playa, olas suaves y horizonte atlántico para Santa Killa</desc>
+  <rect width="1920" height="1080" fill="#1a1a1a"/>
+  <path d="M0 0h1920v620H0z" fill="#39433f"/>
+  <path d="M0 420c190 54 346 72 518 50 212-28 365-113 591-80 224 33 372 137 601 104 83-12 151-32 210-54v640H0z" fill="#c9d1ca" opacity=".34"/>
+  <path d="M0 535c231 70 412 54 628-4 223-60 400-82 629 6 209 80 401 91 663 7v536H0z" fill="#f6f4ef" opacity=".78"/>
+  <path d="M0 655c174 32 340 26 498-20 252-73 430-78 654-6 223 72 481 79 768 4v447H0z" fill="#dad8d1"/>
+  <path d="M0 735c264 36 512 27 744-27 246-57 430-49 660 19 162 48 334 56 516 24v329H0z" fill="#f8f8f6"/>
+  <path d="M0 0h1920v1080H0z" fill="#000000" opacity=".28"/>
+  <path d="M1520 182c-42 40-93 60-152 60 70 18 121 58 152 120 28-62 78-102 150-120-60 0-110-20-150-60z" fill="#ffffff" opacity=".08"/>
+</svg>

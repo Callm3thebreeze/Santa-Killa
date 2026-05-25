@@ -1,0 +1,27 @@
+---
+type Props = {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  align?: "left" | "center";
+};
+
+const { eyebrow, title, intro, align = "left" } = Astro.props;
+---
+
+<div class:list={["section-heading", `section-heading--${align}`]} data-reveal>
+  <p class="section-kicker">{eyebrow}</p>
+  <h2 class="section-title">{title}</h2>
+  {intro && <p class="section-intro">{intro}</p>}
+</div>
+
+<style>
+  .section-heading--center {
+    text-align: center;
+  }
+
+  .section-heading--center .section-title,
+  .section-heading--center .section-intro {
+    margin-inline: auto;
+  }
+</style>

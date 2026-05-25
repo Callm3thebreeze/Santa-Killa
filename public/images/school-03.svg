@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" role="img" aria-labelledby="title desc">
+  <title id="title">Clase de surf en grupo</title>
+  <desc id="desc">Placeholder de un grupo pequeño entrando al agua para una clase de surf</desc>
+  <rect width="560" height="420" fill="#e7efed"/>
+  <path d="M0 195c90 26 176 24 258-6 112-41 207-38 302 10v221H0z" fill="#f6f5f2"/>
+  <path d="M0 244c90 16 168 10 236-18 107-43 214-37 324 16v178H0z" fill="#d9d7d0"/>
+  <g fill="#111" opacity=".86">
+    <circle cx="174" cy="180" r="18"/>
+    <path d="M156 210h36l16 108h-68z"/>
+    <circle cx="282" cy="158" r="18"/>
+    <path d="M263 188h38l18 118h-74z"/>
+    <circle cx="390" cy="184" r="18"/>
+    <path d="M372 214h36l15 104h-66z"/>
+  </g>
+</svg>

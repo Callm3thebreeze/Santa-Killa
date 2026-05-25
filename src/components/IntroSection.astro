@@ -1,0 +1,171 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="info-escuela" class="intro section">
+  <div class="intro__grid container">
+    <div class="intro__copy">
+      <SectionHeading
+        eyebrow="Info escuela"
+        title="Aprender surf con calma, criterio y buen ambiente"
+        intro="Santa Killa nace junto al Atlántico, en una de las playas más especiales de Cádiz: El Palmar. Una escuela pensada para aprender a surfear con seguridad, tanto si es tu primera vez sobre una tabla como si quieres mejorar tu técnica."
+      />
+      <div class="intro__body" data-reveal>
+        <p>
+          Trabajamos con grupos cuidados, lectura constante de las condiciones
+          del mar e instructores de surf que acompañan cada sesión con cercanía.
+          El objetivo es que entiendas la playa, ganes confianza y disfrutes del
+          proceso desde el primer minuto.
+        </p>
+        <p>
+          Las clases se adaptan a principiantes, niveles intermedios y personas
+          que buscan pulir remada, puesta en pie, timing y seguridad dentro del
+          agua.
+        </p>
+        <a class="text-link" href="#contacto">Hablar con la escuela</a>
+      </div>
+    </div>
+
+    <div
+      class="intro__images"
+      aria-label="Ambiente de la escuela Santa Killa"
+      data-reveal
+    >
+      <figure class="intro__image intro__image--large">
+        <img
+          src="/images/school-01.svg"
+          alt="Instructor de surf preparando una clase en la playa de El Palmar"
+          width="780"
+          height="980"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <figure class="intro__image intro__image--small intro__image--top">
+        <img
+          src="/images/school-02.svg"
+          alt="Tablas de surf alineadas sobre arena clara antes de una clase"
+          width="560"
+          height="420"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <figure class="intro__image intro__image--small intro__image--bottom">
+        <img
+          src="/images/school-03.svg"
+          alt="Grupo pequeño entrando al agua para una clase de surf en Cádiz"
+          width="560"
+          height="420"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1fr);
+    gap: clamp(42px, 7vw, 96px);
+    align-items: center;
+  }
+
+  .intro__copy {
+    min-width: 0;
+  }
+
+  .intro__body {
+    display: grid;
+    gap: 20px;
+    max-width: 630px;
+    margin-top: 32px;
+    color: var(--color-gray-600);
+    font-size: 1.02rem;
+    line-height: 1.85;
+  }
+
+  .intro__body .text-link {
+    margin-top: 10px;
+    color: var(--color-black);
+  }
+
+  .intro__images {
+    position: relative;
+    display: grid;
+    min-height: clamp(520px, 56vw, 760px);
+  }
+
+  .intro__image {
+    overflow: hidden;
+    margin: 0;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .intro__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .intro__image--large {
+    position: absolute;
+    inset: 0 auto 0 10%;
+    width: 58%;
+  }
+
+  .intro__image--small {
+    position: absolute;
+    right: 0;
+    width: 46%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .intro__image--top {
+    top: 8%;
+  }
+
+  .intro__image--bottom {
+    bottom: 8%;
+  }
+
+  @media (max-width: 900px) {
+    .intro__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .intro__images {
+      min-height: auto;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+    }
+
+    .intro__image,
+    .intro__image--large,
+    .intro__image--small {
+      position: static;
+      width: auto;
+      aspect-ratio: 4 / 5;
+    }
+
+    .intro__image--large {
+      grid-row: span 2;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .intro__images {
+      grid-template-columns: 1fr;
+    }
+
+    .intro__image,
+    .intro__image--large,
+    .intro__image--small {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>
