@@ -3,64 +3,71 @@ import SectionHeading from "./SectionHeading.astro";
 ---
 
 <section id="info-escuela" class="intro section">
-  <div class="intro__grid container">
-    <div class="intro__copy">
-      <SectionHeading
-        eyebrow="Info escuela"
-        title="Aprender surf con calma, criterio y buen ambiente"
-        intro="Santa Killa nace junto al Atlántico, en una de las playas más especiales de Cádiz: El Palmar. Una escuela pensada para aprender a surfear con seguridad, tanto si es tu primera vez sobre una tabla como si quieres mejorar tu técnica."
-      />
-      <div class="intro__body" data-reveal>
-        <p>
-          Trabajamos con grupos cuidados, lectura constante de las condiciones
-          del mar e instructores de surf que acompañan cada sesión con cercanía.
-          El objetivo es que entiendas la playa, ganes confianza y disfrutes del
-          proceso desde el primer minuto.
-        </p>
-        <p>
-          Las clases se adaptan a principiantes, niveles intermedios y personas
-          que buscan pulir remada, puesta en pie, timing y seguridad dentro del
-          agua.
-        </p>
-        <a class="text-link" href="#contacto">Hablar con la escuela</a>
-      </div>
-    </div>
+  <div class="intro__page-heading" data-reveal>
+    <p class="section-kicker">Santa Killa</p>
+    <h1>Escuela de surf en El Palmar</h1>
+  </div>
 
-    <div
-      class="intro__images"
-      aria-label="Ambiente de la escuela Santa Killa"
-      data-reveal
-    >
-      <figure class="intro__image intro__image--large">
-        <img
-          src="/images/school-01.svg"
-          alt="Instructor de surf preparando una clase en la playa de El Palmar"
-          width="780"
-          height="980"
-          loading="lazy"
-          decoding="async"
+  <div class="container">
+    <div class="intro__grid">
+      <div class="intro__copy">
+        <SectionHeading
+          eyebrow="Info escuela"
+          title="Aprender surf con calma, criterio y buen ambiente"
+          intro="Santa Killa nace junto al Atlántico, en una de las playas más especiales de Cádiz: El Palmar. Una escuela pensada para aprender a surfear con seguridad, tanto si es tu primera vez sobre una tabla como si quieres mejorar tu técnica."
         />
-      </figure>
-      <figure class="intro__image intro__image--small intro__image--top">
-        <img
-          src="/images/school-02.svg"
-          alt="Tablas de surf alineadas sobre arena clara antes de una clase"
-          width="560"
-          height="420"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-      <figure class="intro__image intro__image--small intro__image--bottom">
-        <img
-          src="/images/school-03.svg"
-          alt="Grupo pequeño entrando al agua para una clase de surf en Cádiz"
-          width="560"
-          height="420"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
+        <div class="intro__body" data-reveal>
+          <p>
+            Trabajamos con grupos cuidados, lectura constante de las condiciones
+            del mar e instructores de surf que acompañan cada sesión con
+            cercanía. El objetivo es que entiendas la playa, ganes confianza y
+            disfrutes del proceso desde el primer minuto.
+          </p>
+          <p>
+            Las clases se adaptan a principiantes, niveles intermedios y
+            personas que buscan pulir remada, puesta en pie, timing y seguridad
+            dentro del agua.
+          </p>
+          <a class="text-link" href="#contacto">Hablar con la escuela</a>
+        </div>
+      </div>
+
+      <div
+        class="intro__images"
+        aria-label="Ambiente de la escuela Santa Killa"
+        data-reveal
+      >
+        <figure class="intro__image intro__image--large">
+          <img
+            src="/images/school-01.svg"
+            alt="Instructor de surf preparando una clase en la playa de El Palmar"
+            width="780"
+            height="980"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <figure class="intro__image intro__image--small intro__image--top">
+          <img
+            src="/images/school-02.svg"
+            alt="Tablas de surf alineadas sobre arena clara antes de una clase"
+            width="560"
+            height="420"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <figure class="intro__image intro__image--small intro__image--bottom">
+          <img
+            src="/images/school-03.svg"
+            alt="Grupo pequeño entrando al agua para una clase de surf en Cádiz"
+            width="560"
+            height="420"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
     </div>
   </div>
 </section>
@@ -75,6 +82,31 @@ import SectionHeading from "./SectionHeading.astro";
 
   .intro__copy {
     min-width: 0;
+  }
+
+  .intro__page-heading {
+    display: grid;
+    justify-items: center;
+    width: 100%;
+    margin: 0 auto 10rem;
+    padding-inline: 20px;
+    text-align: center;
+  }
+
+  .intro__page-heading .section-kicker {
+    margin-inline: auto;
+  }
+
+  .intro__page-heading h1 {
+    width: min(100%, 980px);
+    margin-inline: auto;
+    font-family: var(--font-display);
+    font-size: clamp(3.4rem, 8.8vw, 7.4rem);
+    font-weight: 640;
+    letter-spacing: var(--tracking-display);
+    line-height: 0.9;
+    text-align: center;
+    text-wrap: balance;
   }
 
   .intro__body {
@@ -138,6 +170,12 @@ import SectionHeading from "./SectionHeading.astro";
       grid-template-columns: 1fr;
     }
 
+    .intro__page-heading {
+      margin-bottom: 34px;
+      margin-inline: auto;
+      padding-inline: 0;
+    }
+
     .intro__images {
       min-height: auto;
       grid-template-columns: 1.1fr 0.9fr;
@@ -158,6 +196,10 @@ import SectionHeading from "./SectionHeading.astro";
   }
 
   @media (max-width: 560px) {
+    .intro__page-heading h1 {
+      font-size: clamp(2.7rem, 13vw, 4.6rem);
+    }
+
     .intro__images {
       grid-template-columns: 1fr;
     }

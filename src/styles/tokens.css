@@ -11,7 +11,9 @@
   --color-sea-quiet: #eef4f2;
 
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  --font-display: 'SUSE', 'Inter', system-ui, sans-serif;
+  --font-accent: 'On Acid', 'Inter', system-ui, sans-serif;
+  --tracking-display: -0.03em;
 
   --container: min(1120px, calc(100vw - 40px));
   --container-wide: min(1320px, calc(100vw - 32px));

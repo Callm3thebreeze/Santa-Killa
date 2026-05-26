@@ -8,7 +8,7 @@ import { contact } from "@data/contact";
     <div class="contact__content" id="contacto">
       <SectionHeading
         eyebrow="Ubicación y contacto"
-        title="Surf en El Palmar, Cádiz, con reserva sencilla"
+        title="Reserva sencilla"
         intro="Escríbenos para consultar disponibilidad, nivel de la clase y condiciones previstas. Mantenemos una comunicación clara antes de entrar al agua."
       />
 
@@ -16,12 +16,13 @@ import { contact } from "@data/contact";
         <p><span>Zona</span>{contact.location}</p>
         <p>
           <span>Teléfono</span><a
-            href={`tel:${contact.phone.replaceAll(" ", "")}`}
-            >{contact.phone}</a>
+            href={`tel:${contact.phone.replaceAll(" ", "")}`}>{contact.phone}</a
+          >
         </p>
         <p>
           <span>Email</span><a href={`mailto:${contact.email}`}
-            >{contact.email}</a>
+            >{contact.email}</a
+          >
         </p>
       </address>
 

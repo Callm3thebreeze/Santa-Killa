@@ -1,5 +1,13 @@
 @import './tokens.css';
 
+@font-face {
+  font-family: 'On Acid';
+  src: url('/fonts/on%20acid.woff') format('woff');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -130,6 +138,7 @@ address {
 .section-kicker {
   margin-bottom: 14px;
   color: var(--color-gray-600);
+  font-family: var(--font-accent);
   font-size: 0.76rem;
   font-weight: 760;
   letter-spacing: 0.16em;
@@ -142,7 +151,7 @@ address {
   font-family: var(--font-display);
   font-size: clamp(2.35rem, 6vw, 5rem);
   font-weight: 640;
-  letter-spacing: 0;
+  letter-spacing: var(--tracking-display);
   line-height: 0.94;
 }
 
