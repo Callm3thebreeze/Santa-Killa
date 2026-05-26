@@ -8,25 +8,8 @@ const year = new Date().getFullYear();
 <footer class="footer">
   <div class="footer__inner container-wide">
     <div>
-      <a
-        class="footer__brand"
-        href="#"
-        aria-label="Santa Killa, volver al inicio">Santa Killa</a
-      >
-      <p>© {year} Santa Killa. Escuela de surf en El Palmar, Cádiz.</p>
+      <p>© {year} JV DEV & DESIGN</p>
     </div>
-
-    <nav class="footer__nav" aria-label="Navegación de pie de página">
-      <ul>
-        {
-          navigation.map((item) => (
-            <li>
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
 
     <address class="footer__contact">
       <span>{contact.location}</span>

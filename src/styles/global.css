@@ -166,8 +166,9 @@ address {
 .text-link {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   width: fit-content;
+  position: relative;
+  padding-bottom: 8px;
   color: var(--color-black);
   font-weight: 750;
   line-height: 1.2;
@@ -176,14 +177,35 @@ address {
 
 .text-link::after {
   content: '';
-  width: 34px;
-  height: 1px;
-  background: currentColor;
-  transition: width 220ms var(--ease-out);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background:
+    linear-gradient(
+      -45deg,
+      transparent 44%,
+      currentColor 45% 55%,
+      transparent 56%
+    )
+    0 0 / 10px 6px repeat-x,
+    linear-gradient(
+      45deg,
+      transparent 44%,
+      currentColor 45% 55%,
+      transparent 56%
+    )
+    5px 0 / 10px 6px repeat-x;
+  opacity: 0.82;
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
 }
 
 .text-link:hover::after {
-  width: 52px;
+  opacity: 1;
+  transform: translateY(7px);
 }
 
 .button-link {
@@ -230,7 +252,7 @@ address {
   }
 
   .section-title {
-    font-size: clamp(2.2rem, 14vw, 3.8rem);
+    font-size: clamp(1.95rem, 10.5vw, 3.05rem);
   }
 }
 

@@ -365,7 +365,7 @@ Debe incluir:
 Ejemplo:
 
 ```txt
-© 2026 Santa Killa. Escuela de surf en El Palmar, Cádiz.
+© 2026 JV DEV & Escuela de surf en El Palmar, Cádiz.
 ```
 
 ---
