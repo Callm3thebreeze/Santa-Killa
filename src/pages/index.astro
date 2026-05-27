@@ -17,22 +17,31 @@ const title = "Santa Killa | Escuela de surf en El Palmar, Cádiz";
 const description =
   "Escuela de surf en El Palmar, Cádiz. Clases de surf para todos los niveles en un entorno seguro, cercano y junto al Atlántico.";
 const siteUrl = Astro.site ?? new URL("https://www.santakilla.com");
+const homeUrl = new URL("/", siteUrl).toString();
+const businessId = `${homeUrl}#business`;
+const websiteId = `${homeUrl}#website`;
+const webpageId = `${homeUrl}#webpage`;
+const imageUrl = new URL("/images/hero-poster.svg", siteUrl).toString();
 
 const businessSchema = {
   "@context": "https://schema.org",
   "@type": "SportsActivityLocation",
+  "@id": businessId,
   name: "Santa Killa",
-  url: new URL("/", siteUrl).toString(),
+  url: homeUrl,
   logo: new URL("/images/white-logo.png", siteUrl).toString(),
-  image: new URL("/images/hero-poster.svg", siteUrl).toString(),
+  image: imageUrl,
   description,
   telephone: contact.phone,
   email: contact.email,
+  hasMap: contact.mapsExternalUrl,
   priceRange: "30 EUR - 140 EUR",
   inLanguage: "es-ES",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "El Palmar",
+    streetAddress: "P.º Marítimo",
+    postalCode: "11159",
+    addressLocality: "El Palmar de Vejer",
     addressRegion: "Cádiz",
     addressCountry: "ES",
   },
@@ -64,6 +73,51 @@ const businessSchema = {
   },
 };
 
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: "Santa Killa",
+  url: homeUrl,
+  inLanguage: "es-ES",
+  publisher: {
+    "@id": businessId,
+  },
+};
+
+const webpageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": webpageId,
+  url: homeUrl,
+  name: title,
+  description,
+  inLanguage: "es-ES",
+  isPartOf: {
+    "@id": websiteId,
+  },
+  about: {
+    "@id": businessId,
+  },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: imageUrl,
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Santa Killa",
+      item: homeUrl,
+    },
+  ],
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -81,7 +135,13 @@ const faqSchema = {
 <BaseLayout
   title={title}
   description={description}
-  jsonLd={[businessSchema, faqSchema]}
+  jsonLd={[
+    businessSchema,
+    websiteSchema,
+    webpageSchema,
+    breadcrumbSchema,
+    faqSchema,
+  ]}
 >
   <Header />
   <main id="main-content">

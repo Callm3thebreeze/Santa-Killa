@@ -23,6 +23,7 @@ const siteUrl = Astro.site ?? new URL("https://www.santakilla.com");
 const canonicalUrl =
   canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
 const imageUrl = new URL(ogImage, siteUrl).toString();
+const sitemapUrl = new URL("/sitemap.xml", siteUrl).toString();
 const jsonLdMarkup = JSON.stringify(jsonLd);
 ---
 
@@ -33,9 +34,13 @@ const jsonLdMarkup = JSON.stringify(jsonLd);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" href={canonicalUrl} hreflang="es-ES" />
+    <link rel="alternate" href={canonicalUrl} hreflang="x-default" />
+    <link rel="sitemap" href={sitemapUrl} type="application/xml" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -51,6 +56,10 @@ const jsonLdMarkup = JSON.stringify(jsonLd);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={imageUrl} />
+    <meta
+      property="og:image:alt"
+      content="Santa Killa, escuela de surf en El Palmar"
+    />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
