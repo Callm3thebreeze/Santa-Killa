@@ -10,11 +10,13 @@ import { contact } from "@data/contact";
       muted
       loop
       playsinline
+      disableRemotePlayback
+      disablepictureinpicture
       preload="metadata"
+      poster="/images/hero-poster.svg"
       tabindex="-1"
     >
       <source src="/videos/hero.mp4" type="video/mp4" />
-      <source src="/videos/hero.mov" type="video/quicktime" />
     </video>
   </div>
 
@@ -46,6 +48,62 @@ import { contact } from "@data/contact";
     </div>
   </div>
 </section>
+
+<script is:inline>
+  (() => {
+    const heroVideo = document.querySelector(".hero__video");
+    if (!(heroVideo instanceof HTMLVideoElement)) {
+      return;
+    }
+
+    const tryPlay = () => {
+      heroVideo.muted = true;
+      heroVideo.defaultMuted = true;
+      heroVideo.playsInline = true;
+
+      const promise = heroVideo.play();
+      if (promise && typeof promise.catch === "function") {
+        promise.catch(() => {
+          // Algunos navegadores bloquean autoplay hasta interacción.
+        });
+      }
+    };
+
+    if (heroVideo.readyState >= 2) {
+      tryPlay();
+    } else {
+      heroVideo.addEventListener("canplay", tryPlay, { once: true });
+    }
+
+    window.addEventListener("pageshow", () => {
+      if (heroVideo.paused) {
+        tryPlay();
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && heroVideo.paused) {
+        tryPlay();
+      }
+    });
+
+    const resumeOnInteraction = () => {
+      if (heroVideo.paused) {
+        tryPlay();
+      }
+    };
+
+    window.addEventListener("pointerdown", resumeOnInteraction, {
+      once: true,
+      passive: true,
+    });
+    window.addEventListener("touchstart", resumeOnInteraction, {
+      once: true,
+      passive: true,
+    });
+    window.addEventListener("keydown", resumeOnInteraction, { once: true });
+  })();
+</script>
 
 <style>
   .hero {
