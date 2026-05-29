@@ -8,16 +8,24 @@ import { contact } from "@data/contact";
     <div class="contact__content" id="contacto">
       <SectionHeading
         eyebrow="Ubicación y contacto"
-        title="Reserva sencilla"
+        title="Reservas"
         intro="Escríbenos para consultar disponibilidad, nivel de la clase y condiciones previstas. Mantenemos una comunicación clara antes de entrar al agua."
       />
 
       <address class="contact__details" data-reveal>
         <p><span>Zona</span>{contact.location}</p>
         <p>
-          <span>Teléfono</span><a
-            href={`tel:${contact.phone.replaceAll(" ", "")}`}>{contact.phone}</a
-          >
+          <span>Teléfono</span>
+          <span class="contact__phones">
+            {
+              contact.phones.map((phone, index) => (
+                <>
+                  {index > 0 && <span class="contact__separator"> // </span>}
+                  <a href={`tel:${phone.replaceAll(" ", "")}`}>{phone}</a>
+                </>
+              ))
+            }
+          </span>
         </p>
         <p>
           <span>Email</span><a href={`mailto:${contact.email}`}
@@ -91,6 +99,18 @@ import { contact } from "@data/contact";
 
   .contact__details a {
     text-decoration: none;
+  }
+
+  .contact__phones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    align-items: center;
+  }
+
+  .contact__separator {
+    color: var(--color-gray-600);
+    white-space: pre;
   }
 
   .contact__actions {

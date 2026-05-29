@@ -1,79 +1,136 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
+import {
+  formatRelativeFromDate,
+  relativeLabelToDate,
+} from "@scripts/relative-time";
+
+const reviewsSnapshotDate = new Date("2026-05-29T12:00:00");
+const today = new Date();
+
+const reviews = [
+  {
+    name: "MARIA JESUS FERRANDO",
+    metaSeed: "Hace un año",
+    text: "Gracias a todo el equipo y sobre todo a Juanlu por su paciencia y perseverancia...nos vemos al año que viene.",
+  },
+  {
+    name: "David SR",
+    metaSeed: "Hace un año",
+    text: "Recomendado 100%. Los profesores (Juan Luis y Gonzalo) fueron super atentos y grandes profesionales. Se nota que no solo les encanta el surf sino enseñar. Tanto mi pareja como yo nos fuimos habiendo aprendido muchísimo y sobre todo habiéndolo pasado genial. En general tanto en las clases como por los chicos de la tienda se respira un ambiente de buen rollo increíble, repetiré sin duda!",
+  },
+  {
+    name: "Cristian Redondo Zurita",
+    metaSeed: "Hace 11 meses",
+    text: "Vanesa y Sergio son estupendos, super amables y divertidos, dispuestos a ayudarte con cualquier cosa. Dani es un monitor INCREÍBLE, super pendiente de todos. Las clases se pasan volando y aprendes un montón",
+  },
+  {
+    name: "Josu Álvarez",
+    metaSeed: "Hace 9 meses",
+    text: "Buena sesión de surf, y aún con olas pequeñas se ha podido aprovechar. Juanlu, el instructor, ha contribuido a hacerlo entretenido.",
+  },
+].map((review) => {
+  const reviewDate = relativeLabelToDate(review.metaSeed, reviewsSnapshotDate);
+
+  return {
+    ...review,
+    meta: formatRelativeFromDate(reviewDate, today),
+  };
+});
 ---
 
-<section class="seo-copy section" aria-labelledby="surf-el-palmar-title">
-  <div class="seo-copy__inner container">
-    <div class="seo-copy__media" data-reveal>
-      <img
-        src="/images/el-palmar-surf.svg"
-        alt="Orilla de la playa de El Palmar con olas suaves para clases de surf"
-        width="1040"
-        height="720"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+<section class="reviews section" aria-labelledby="resenas-clientes-title">
+  <div class="container">
+    <SectionHeading
+      eyebrow="Reseñas"
+      title="Lo que cuentan quienes ya surfearon con Santa Killa"
+      intro="Opiniones reales de alumnos que pasaron por la escuela en El Palmar."
+      align="center"
+    />
 
-    <div class="seo-copy__content">
-      <SectionHeading
-        eyebrow="Surf en Cádiz"
-        title="Una escuela de surf pensada para leer El Palmar"
-        intro="El Palmar cambia con cada marea, cada viento y cada banco de arena. Por eso nuestras clases de surf combinan técnica, seguridad y lectura del entorno."
-      />
-      <div class="seo-copy__body" data-reveal>
-        <p>
-          Si buscas una escuela de surf en El Palmar para empezar desde cero,
-          mejorar tu puesta en pie o ganar autonomía en el agua, Santa Killa
-          trabaja con una metodología cercana y progresiva. Las sesiones están
-          orientadas a principiantes y a surfistas de distintos niveles que
-          quieren disfrutar del surf en Cádiz con acompañamiento profesional.
-        </p>
-        <p>
-          Antes de cada clase revisamos condiciones del mar, mareas y viento
-          para elegir un momento adecuado. Ese cuidado hace que el aprendizaje
-          sea más seguro, más claro y mucho más disfrutable.
-        </p>
-      </div>
+    <div class="reviews__grid" data-reveal>
+      {
+        reviews.map((review) => (
+          <article class="review-card">
+            <header class="review-card__header">
+              <div class="review-card__identity">
+                <div>
+                  <h3>{review.name}</h3>
+                  <p>{review.meta}</p>
+                </div>
+              </div>
+            </header>
+            <p
+              class="review-card__stars"
+              aria-label="Valoración 5 de 5 estrellas"
+            >
+              ★★★★★
+            </p>
+            <p class="review-card__text">{review.text}</p>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>
 
 <style>
-  .seo-copy {
+  .reviews {
     border-top: 1px solid rgba(10, 10, 10, 0.08);
   }
 
-  .seo-copy__inner {
+  .reviews__grid {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
-    gap: clamp(40px, 7vw, 90px);
-    align-items: center;
-  }
-
-  .seo-copy__media {
-    overflow: hidden;
-    aspect-ratio: 4 / 3;
-    background: var(--color-gray-100);
-    border-radius: var(--radius-card);
-  }
-
-  .seo-copy__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .seo-copy__body {
-    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
-    margin-top: 32px;
+    margin-top: clamp(38px, 5vw, 62px);
+  }
+
+  .review-card {
+    display: grid;
+    gap: 16px;
+    padding: clamp(22px, 3vw, 32px);
+    background: var(--color-white);
+    border: 1px solid rgba(10, 10, 10, 0.1);
+    border-radius: var(--radius-card);
+    box-shadow: 0 14px 36px rgba(10, 10, 10, 0.08);
+  }
+
+  .review-card__identity {
+    display: block;
+  }
+
+  .review-card__header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2vw, 1.75rem);
+    font-weight: 640;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.1;
+  }
+
+  .review-card__header p {
+    margin: 6px 0 0;
     color: var(--color-gray-600);
-    line-height: 1.85;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  .review-card__stars {
+    margin: 0;
+    color: #d4a319;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+  }
+
+  .review-card__text {
+    margin: 0;
+    color: var(--color-gray-700);
+    line-height: 1.7;
   }
 
   @media (max-width: 880px) {
-    .seo-copy__inner {
+    .reviews__grid {
       grid-template-columns: 1fr;
     }
   }
