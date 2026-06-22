@@ -1,1 +1,17 @@
-{"scripts":{"dev":"astro dev","start":"astro dev","build":"astro check && astro build","preview":"astro preview","astro":"astro"},"dependencies":{},"devDependencies":{"@astrojs/check":"latest","astro":"latest","typescript":"latest"}}
+{
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "deploy": "npm run build && wrangler deploy",
+    "astro": "astro"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "astro": "latest",
+    "typescript": "latest",
+    "wrangler": "^4.103.0"
+  }
+}

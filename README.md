@@ -9,7 +9,11 @@ npm install
 npm run dev
 npm run build
 npm run preview
+npm run deploy
 ```
+
+El despliegue en Cloudflare Workers usa `wrangler.jsonc`, sirve el contenido
+estático generado en `dist/` y publica el Worker con el nombre `santa-killa`.
 
 ## Estructura
 
