@@ -1,6 +1,19 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
 import { schedule } from "@data/schedule";
+import schoolOneImage from "../assets/school1.png";
+import schoolTwoImage from "../assets/shool2.png";
+
+const scheduleGallery = [
+  {
+    image: schoolOneImage,
+    alt: "Clase de surf de Santa Killa en la playa de El Palmar",
+  },
+  {
+    image: schoolTwoImage,
+    alt: "Grupo de alumnos de Santa Killa junto al mar",
+  },
+];
 ---
 
 <section id="horario" class="schedule section">
@@ -30,6 +43,32 @@ Por eso organizamos las clases según la previsión y disponibilidad, para ofrec
         Si vienes a El Palmar varios días, podemos ayudarte a elegir el mejor
         momento para aprender surf según la previsión.
       </p>
+    </div>
+  </div>
+
+  <div
+    class="schedule__gallery-wrap"
+    aria-label="Fotos de Santa Killa y sesiones de surf"
+    data-reveal
+  >
+    <div class="schedule__gallery" role="list">
+      {
+        scheduleGallery.map((item) => (
+          <figure class="schedule__photo" role="listitem">
+            <img
+              src={item.image.src}
+              alt={item.alt}
+              width={item.image.width}
+              height={item.image.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        ))
+      }
+    </div>
+    <div class="schedule__dots" aria-hidden="true">
+      {scheduleGallery.map(() => <span></span>)}
     </div>
   </div>
 </section>
@@ -90,9 +129,68 @@ Por eso organizamos las clases según la previsión y disponibilidad, para ofrec
     line-height: 1.75;
   }
 
+  .schedule__gallery-wrap {
+    position: relative;
+    width: 100vw;
+    margin-top: clamp(40px, 6vw, 76px);
+    margin-left: calc(50% - 50vw);
+  }
+
+  .schedule__gallery {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 50vw;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+  }
+
+  .schedule__photo {
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-gray-100);
+    scroll-snap-align: start;
+  }
+
+  .schedule__photo img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .schedule__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    pointer-events: none;
+  }
+
+  .schedule__dots span {
+    width: 7px;
+    height: 7px;
+    background: var(--color-white);
+    border-radius: 999px;
+    opacity: 0.62;
+  }
+
+  .schedule__dots span:first-child {
+    opacity: 0.92;
+  }
+
   @media (max-width: 880px) {
     .schedule__inner {
       grid-template-columns: 1fr;
+    }
+
+    .schedule__gallery {
+      grid-auto-columns: 82vw;
     }
   }
 
@@ -104,6 +202,10 @@ Por eso organizamos las clases según la previsión y disponibilidad, para ofrec
 
     dd {
       text-align: left;
+    }
+
+    .schedule__gallery {
+      grid-auto-columns: 100%;
     }
   }
 </style>
