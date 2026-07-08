@@ -12,7 +12,7 @@ import { contact } from "@data/contact";
       playsinline
       disableRemotePlayback
       disablepictureinpicture
-      preload="metadata"
+      preload="auto"
       poster="/images/hero-poster.svg"
       tabindex="-1"
     >
@@ -125,7 +125,9 @@ import { contact } from "@data/contact";
   }
 
   .hero__media {
-    background: #cfd3d1;
+    background:
+      url("/images/hero-poster.svg") center / cover no-repeat,
+      var(--color-black);
   }
 
   .hero__video {

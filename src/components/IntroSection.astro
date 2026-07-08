@@ -1,5 +1,8 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
+import motawaImage from "../assets/motawa.webp";
+import shopImage from "../assets/shop.jpeg";
+import waveImage from "../assets/wave.webp";
 ---
 
 <section id="info-escuela" class="intro section">
@@ -50,30 +53,30 @@ import SectionHeading from "./SectionHeading.astro";
     <div class="intro__carousel" role="list">
       <figure class="intro__slide" role="listitem">
         <img
-          src="/images/school-01.svg"
+          src={motawaImage.src}
           alt="Instructor de surf preparando una clase en la playa de El Palmar"
-          width="780"
-          height="980"
+          width={motawaImage.width}
+          height={motawaImage.height}
           loading="lazy"
           decoding="async"
         />
       </figure>
       <figure class="intro__slide" role="listitem">
         <img
-          src="/images/school-02.svg"
+          src={shopImage.src}
           alt="Tablas de surf alineadas sobre arena clara antes de una clase"
-          width="560"
-          height="420"
+          width={shopImage.width}
+          height={shopImage.height}
           loading="lazy"
           decoding="async"
         />
       </figure>
       <figure class="intro__slide" role="listitem">
         <img
-          src="/images/school-03.svg"
+          src={waveImage.src}
           alt="Grupo pequeño entrando al agua para una clase de surf en Cádiz"
-          width="560"
-          height="420"
+          width={waveImage.width}
+          height={waveImage.height}
           loading="lazy"
           decoding="async"
         />
