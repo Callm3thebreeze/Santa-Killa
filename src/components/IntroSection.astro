@@ -50,8 +50,8 @@ import waveImage from "../assets/wave.webp";
     aria-label="Ambiente de la escuela Santa Killa"
     data-reveal
   >
-    <div class="intro__carousel" role="list">
-      <figure class="intro__slide" role="listitem">
+    <div class="intro__carousel" role="list" data-intro-carousel>
+      <figure class="intro__slide" role="listitem" data-intro-slide data-index="0">
         <img
           src={motawaImage.src}
           alt="Instructor de surf preparando una clase en la playa de El Palmar"
@@ -61,7 +61,7 @@ import waveImage from "../assets/wave.webp";
           decoding="async"
         />
       </figure>
-      <figure class="intro__slide" role="listitem">
+      <figure class="intro__slide" role="listitem" data-intro-slide data-index="1">
         <img
           src={shopImage.src}
           alt="Tablas de surf alineadas sobre arena clara antes de una clase"
@@ -71,7 +71,7 @@ import waveImage from "../assets/wave.webp";
           decoding="async"
         />
       </figure>
-      <figure class="intro__slide" role="listitem">
+      <figure class="intro__slide" role="listitem" data-intro-slide data-index="2">
         <img
           src={waveImage.src}
           alt="Grupo pequeño entrando al agua para una clase de surf en Cádiz"
@@ -82,13 +82,63 @@ import waveImage from "../assets/wave.webp";
         />
       </figure>
     </div>
-    <div class="intro__dots" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="intro__dots" aria-label="Seleccionar foto del carrusel">
+      {
+        [0, 1, 2].map((index) => (
+          <button
+            class:list={["intro__dot", { "is-active": index === 0 }]}
+            type="button"
+            aria-label={`Ver foto ${index + 1} de 3`}
+            aria-current={index === 0 ? "true" : undefined}
+            data-intro-dot
+          />
+        ))
+      }
     </div>
   </div>
 </section>
+
+<script is:inline>
+  (() => {
+    const carousel = document.querySelector("[data-intro-carousel]");
+    if (!(carousel instanceof HTMLElement)) return;
+
+    const slides = [...carousel.querySelectorAll("[data-intro-slide]")];
+    const dots = [...document.querySelectorAll("[data-intro-dot]")];
+
+    const setActiveDot = (activeIndex) => {
+      dots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.classList.toggle("is-active", isActive);
+        if (isActive) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    };
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        slides[index]?.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "start",
+        });
+      });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSlide = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visibleSlide) return;
+        setActiveDot(Number(visibleSlide.target.getAttribute("data-index")));
+      },
+      { root: carousel, threshold: [0.55, 0.75] },
+    );
+
+    slides.forEach((slide) => observer.observe(slide));
+  })();
+</script>
 
 <style>
   .intro__content {
@@ -168,9 +218,13 @@ import waveImage from "../assets/wave.webp";
     grid-auto-columns: minmax(320px, 42vw);
     gap: 0;
     overflow-x: auto;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+  }
+
+  .intro__carousel::-webkit-scrollbar {
+    display: none;
   }
 
   .intro__slide {
@@ -195,19 +249,41 @@ import waveImage from "../assets/wave.webp";
     display: flex;
     justify-content: center;
     gap: 9px;
-    pointer-events: none;
   }
 
-  .intro__dots span {
-    width: 7px;
-    height: 7px;
+  .intro__dot {
+    display: block;
+    flex: 0 0 11px;
+    width: 11px;
+    min-width: 11px;
+    max-width: 11px;
+    height: 11px;
+    min-height: 11px;
+    max-height: 11px;
+    aspect-ratio: 1;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
     background: var(--color-white);
-    border-radius: 999px;
-    opacity: 0.62;
+    border: 0;
+    border-radius: 50%;
+    opacity: 0.58;
+    cursor: pointer;
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
   }
 
-  .intro__dots span:first-child {
-    opacity: 0.92;
+  .intro__dot:hover,
+  .intro__dot:focus-visible,
+  .intro__dot.is-active {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+
+  .intro__dot:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
   }
 
   @media (max-width: 1024px) {

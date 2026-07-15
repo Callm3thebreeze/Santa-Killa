@@ -3,6 +3,8 @@ import SectionHeading from "./SectionHeading.astro";
 import { schedule } from "@data/schedule";
 import schoolOneImage from "../assets/school1.png";
 import schoolTwoImage from "../assets/shool2.png";
+import heroThreeImage from "../assets/hero-3.webp";
+import heroFourImage from "../assets/hero-4.webp";
 
 const scheduleGallery = [
   {
@@ -12,6 +14,14 @@ const scheduleGallery = [
   {
     image: schoolTwoImage,
     alt: "Grupo de alumnos de Santa Killa junto al mar",
+  },
+  {
+    image: heroThreeImage,
+    alt: "Sesión de surf de Santa Killa en El Palmar",
+  },
+  {
+    image: heroFourImage,
+    alt: "Surf en las olas de El Palmar con Santa Killa",
   },
 ];
 ---
@@ -51,10 +61,15 @@ Por eso organizamos las clases según la previsión y disponibilidad, para ofrec
     aria-label="Fotos de Santa Killa y sesiones de surf"
     data-reveal
   >
-    <div class="schedule__gallery" role="list">
+    <div class="schedule__gallery" role="list" data-schedule-gallery>
       {
-        scheduleGallery.map((item) => (
-          <figure class="schedule__photo" role="listitem">
+        scheduleGallery.map((item, index) => (
+          <figure
+            class="schedule__photo"
+            role="listitem"
+            data-schedule-photo
+            data-index={index}
+          >
             <img
               src={item.image.src}
               alt={item.alt}
@@ -67,11 +82,66 @@ Por eso organizamos las clases según la previsión y disponibilidad, para ofrec
         ))
       }
     </div>
-    <div class="schedule__dots" aria-hidden="true">
-      {scheduleGallery.map(() => <span></span>)}
+    <div class="schedule__dots" aria-label="Seleccionar foto del carrusel">
+      {
+        scheduleGallery.map((_, index) => (
+          <button
+            class:list={["schedule__dot", { "is-active": index === 0 }]}
+            type="button"
+            aria-label={`Ver foto ${index + 1} de ${scheduleGallery.length}`}
+            aria-current={index === 0 ? "true" : undefined}
+            data-schedule-dot
+            data-index={index}
+          />
+        ))
+      }
     </div>
   </div>
 </section>
+
+<script is:inline>
+  (() => {
+    const gallery = document.querySelector("[data-schedule-gallery]");
+    if (!(gallery instanceof HTMLElement)) return;
+
+    const photos = [...gallery.querySelectorAll("[data-schedule-photo]")];
+    const dots = [...document.querySelectorAll("[data-schedule-dot]")];
+
+    const setActiveDot = (activeIndex) => {
+      dots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.classList.toggle("is-active", isActive);
+        if (isActive) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    };
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        photos[index]?.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "start",
+        });
+      });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visiblePhoto = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visiblePhoto) return;
+
+        const index = Number(visiblePhoto.target.getAttribute("data-index"));
+        setActiveDot(index);
+      },
+      { root: gallery, threshold: [0.55, 0.75] },
+    );
+
+    photos.forEach((photo) => observer.observe(photo));
+  })();
+</script>
 
 <style>
   .schedule__inner {
@@ -142,9 +212,13 @@ Por eso organizamos las clases según la previsión y disponibilidad, para ofrec
     grid-auto-columns: 50vw;
     gap: 0;
     overflow-x: auto;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
+  }
+
+  .schedule__gallery::-webkit-scrollbar {
+    display: none;
   }
 
   .schedule__photo {
@@ -169,19 +243,41 @@ Por eso organizamos las clases según la previsión y disponibilidad, para ofrec
     display: flex;
     justify-content: center;
     gap: 9px;
-    pointer-events: none;
   }
 
-  .schedule__dots span {
-    width: 7px;
-    height: 7px;
+  .schedule__dot {
+    display: block;
+    flex: 0 0 11px;
+    width: 11px;
+    min-width: 11px;
+    max-width: 11px;
+    height: 11px;
+    min-height: 11px;
+    max-height: 11px;
+    aspect-ratio: 1;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
     background: var(--color-white);
-    border-radius: 999px;
-    opacity: 0.62;
+    border: 0;
+    border-radius: 50%;
+    opacity: 0.58;
+    cursor: pointer;
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
   }
 
-  .schedule__dots span:first-child {
-    opacity: 0.92;
+  .schedule__dot:hover,
+  .schedule__dot:focus-visible,
+  .schedule__dot.is-active {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+
+  .schedule__dot:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
   }
 
   @media (max-width: 880px) {
