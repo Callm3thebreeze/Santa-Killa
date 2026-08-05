@@ -12,7 +12,7 @@ export type ContactInfo = {
 
 export const contact: ContactInfo = {
   businessName: 'Santa Killa',
-  phones: ['+34 667899977', '+34 643889980'],
+  phones: ['+34 667899977', '+34 745051736'],
   email: 'santakilla.surfschool@gmail.com',
   whatsapp: 'https://wa.me/34667899977',
   location: 'P.º Marítimo, 11159 El Palmar de Vejer, Cádiz',
