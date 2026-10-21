@@ -72,3 +72,27 @@ public/
 - Accesibilidad: landmarks semánticos, skip link, menú móvil con `aria-expanded`, foco visible, mapa con `title`, vídeo decorativo, textos alternativos y soporte para `prefers-reduced-motion`.
 - Rendimiento: Astro estático, JavaScript mínimo, imágenes con dimensiones, lazy loading en recursos no críticos, vídeo con `preload="metadata"` y poster.
 - SEO local: `title`, `description`, canonical, Open Graph, Twitter Card, un único `h1`, contenido local para El Palmar/Cádiz, NAP consistente, enlace a Google Maps, Schema.org `SportsActivityLocation` y `FAQPage`.
+
+## Previsión y solicitudes de clase
+
+La sección `#reservas` lee `public/forecast.json`, generado cada seis horas por
+GitHub Actions con oleaje IBI de Copernicus Marine y viento de MET Norway.
+No hace peticiones a proveedores desde el navegador ni requiere un servidor propio.
+La ola y el slider conservan el comportamiento anterior; los días futuros empiezan
+a las 09:00. Los datos completos siguen disponibles en el desplegable.
+
+El alumno prepara y envía su solicitud por WhatsApp. La escuela confirma la plaza
+manualmente. No se guardan reservas ni se bloquean cupos en esta primera versión.
+
+**Activación, secretos, límites y mantenimiento:** [docs/forecast.md](docs/forecast.md).
+El JSON inicial está marcado como pendiente: no contiene previsiones ficticias.
+
+```bash
+node --test tests/surf.test.mjs
+python -m pip install -r scripts/forecast-requirements.txt
+python -m unittest discover -s tests -p 'test_*.py'
+python scripts/update_forecast.py
+```
+
+El script requiere Python 3.12 o superior y las dos variables de entorno de
+Copernicus indicadas en la documentación. La compilación de Astro no requiere Python.

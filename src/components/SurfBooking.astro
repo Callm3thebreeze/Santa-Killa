@@ -1,0 +1,189 @@
+---
+import { contact } from '@data/contact';
+import { thresholds } from '../lib/surf';
+---
+<section id="reservas" class="surf-booking section" data-surf-booking data-whatsapp={contact.whatsapp}>
+  <div class="container">
+    <p class="eyebrow">EL PALMAR · PLANIFICA TU SESIÓN</p>
+    <div class="booking-heading">
+      <h2>Tu próxima ola<br />empieza aquí.</h2>
+      <p>Consulta el mar, elige cuándo venir y solicita tu clase. Nuestro equipo confirma la hora y la plaza según las condiciones reales.</p>
+    </div>
+    <div class="booking-grid">
+      <div class="forecast-panel">
+        <div class="forecast-title"><h3>Así estará el mar</h3><span>Hora de El Palmar</span></div>
+        <p data-forecast-status role="status">Cargando previsión…</p>
+        <button type="button" data-retry hidden>Reintentar previsión</button>
+        <div class="day-picker" data-days role="group" aria-label="Día de la previsión"></div>
+        <div class="surf-summary" data-surf-summary aria-live="polite" aria-atomic="true">
+          <div class="surf-summary__top">
+            <p data-wave-date>Elige tu sesión</p>
+            <output class="surf-summary__time" for="wave-hour" data-wave-time>—</output>
+          </div>
+          <div class="wave-picture">
+            <svg viewBox="0 0 440 210" role="img" aria-labelledby="wave-title wave-description">
+              <title id="wave-title">Altura prevista del oleaje</title>
+              <desc id="wave-description" data-wave-description>Sin datos de oleaje todavía.</desc>
+              <line x1="28" y1="180" x2="420" y2="180" stroke="currentColor" opacity=".2" stroke-dasharray="4 5" />
+              <g data-wave-art visibility="hidden">
+                <g data-wave-shape>
+                  <path d="M105 180 C155 180 164 154 187 108 C214 54 266 28 317 43 C345 51 360 75 353 96 C343 80 318 77 305 94 C284 120 324 157 367 171 C384 177 402 180 420 180 Z" fill="currentColor" opacity=".15" />
+                  <path d="M105 180 C155 180 164 154 187 108 C214 54 266 28 317 43 C345 51 360 75 353 96 C343 80 318 77 305 94 C284 120 324 157 367 171 C384 177 402 180 420 180" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+                </g>
+                <line data-wave-ruler x1="62" y1="43" x2="62" y2="180" stroke="currentColor" stroke-width="1.5" />
+                <path data-wave-ruler-top d="M56 43 H68" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <path d="M56 180 H68" stroke="currentColor" stroke-width="1.5" />
+                <text data-wave-height x="78" y="110" fill="currentColor" font-size="23" font-weight="700">—</text>
+              </g>
+            </svg>
+            <p data-wave-empty>La ola aparecerá cuando haya previsión para esta hora.</p>
+          </div>
+          <div class="surf-summary__description">
+          <p class="surf-summary__level" data-wave-level>Sin previsión disponible</p>
+          <p class="surf-summary__copy" data-wave-copy>Selecciona un día y una hora para consultar las condiciones.</p>
+          <p class="surf-summary__note">Altura estimada del oleaje, no de la ola al romper. Dibujo orientativo; la escuela confirma las condiciones.</p>
+          </div>
+          <div class="wave-timeline">
+            <label for="wave-hour">Desliza para ver cómo cambia el mar</label>
+            <input id="wave-hour" type="range" min="0" max="23" step="1" value="12" data-wave-hour aria-label="Hora de la previsión" aria-valuetext="12:00" />
+            <div class="wave-timeline__ticks" aria-hidden="true"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div>
+            <p>Previsión de todo el día. Las solicitudes de clase son de 09:00 a 19:00.</p>
+          </div>
+        </div>
+        <details class="technical-forecast">
+          <summary>Ver previsión detallada · olas, periodo y viento</summary>
+        <div class="forecast-scroll" tabindex="0" role="region" aria-label="Previsión por hora">
+          <table>
+            <caption class="sr-only">Previsión de oleaje y viento para el día seleccionado</caption>
+            <thead><tr><th scope="col">Hora</th><th scope="col">Panorama</th><th scope="col">Ola / de</th><th scope="col">Periodo</th><th scope="col">Viento / de</th><th scope="col">Rachas</th></tr></thead>
+            <tbody data-forecast-rows></tbody>
+          </table>
+        </div>
+        <div class="forecast-legend" aria-label="Niveles de oleaje"><span>○ Plato</span><span>① Principiante</span><span>② Intermedio</span><span>③ Avanzado</span></div>
+        </details>
+        <p class="forecast-source">«—» indica un dato no disponible, nunca viento en calma. El viento entre pasos del modelo de hasta 6 horas se interpola; la altura de ola sigue siendo horaria.</p>
+        <details>
+          <summary>Cómo interpretamos la previsión</summary>
+          <p>Umbrales iniciales de altura significativa del modelo: plato &lt; {thresholds.flat} m; principiante {thresholds.flat}–{thresholds.beginner} m; intermedio {thresholds.beginner}–{thresholds.intermediate} m; avanzado {thresholds.intermediate}–{thresholds.maximum} m. Un periodo ≥ {thresholds.longPeriod} s eleva un nivel la exigencia.</p>
+          <p>Más de {thresholds.maximum} m, viento ≥ {thresholds.strongWind} km/h o rachas ≥ {thresholds.strongGusts} km/h requieren consultar a la escuela. Las direcciones indican de dónde vienen olas y viento.</p>
+          <p>Es una orientación pendiente de calibrar por los monitores, no una garantía de seguridad. La altura del modelo no es la de la ola al romper. Marea, corrientes y bancos de arena pueden cambiar la sesión; el viento de tierra también puede ser peligroso.</p>
+        </details>
+        <p class="forecast-source">Generated using E.U. Copernicus Marine Service Information · <a href="https://doi.org/10.48670/moi-00025" target="_blank" rel="noreferrer">Modelo IBI</a>. Viento: <a href="https://api.met.no/weatherapi/locationforecast/2.0/" target="_blank" rel="noreferrer">MET Norway</a> (<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>). Datos de modelos, no observación en playa.</p>
+      </div>
+      <form class="booking-form" data-booking-form>
+        <header class="booking-form__heading">
+          <p class="eyebrow">NOS VEMOS EN EL AGUA</p>
+          <h3>Solicita tu clase</h3>
+        </header>
+        <div class="booking-fields">
+        <label>Tu nivel<select name="level" required><option value="Principiante">Principiante · empiezo de cero</option><option value="Intermedio">Intermedio · ya cojo olas</option><option value="Avanzado">Avanzado · quiero perfeccionar</option></select></label>
+        <div class="form-pair"><label>Día<input type="date" name="date" required /></label><label>Hora preferida<select name="hour" required>{Array.from({length: 11}, (_, i) => <option value={String(i + 9).padStart(2, '0') + ':00'}>{String(i + 9).padStart(2, '0')}:00</option>)}</select></label></div>
+        <div class="form-pair"><label>Clase<select name="lesson"><option value="grupo">En grupo</option><option value="privada">Privada</option></select></label><label>Personas<input type="number" name="people" min="1" max="8" value="1" required /></label></div>
+        </div>
+        <div class="booking-actions">
+        <div class="booking-feedback">
+        <p class="booking-estimate" data-price>Desde 35 € / persona · 1 h 30 min</p>
+        <p class="booking-advice" data-advice role="status">Selecciona tu día y hora para consultar el mar.</p>
+        </div>
+        <button class="button-link" type="submit">Preparar solicitud →</button>
+        <div data-booking-review hidden>
+          <p data-booking-summary></p>
+          <a class="button-link" data-booking-link target="_blank" rel="noreferrer">Abrir WhatsApp para enviar →</a>
+          <p>Revisa el mensaje y envíalo en WhatsApp. La reserva solo queda confirmada cuando la escuela te responda.</p>
+        </div>
+        <p class="booking-note">Sin pago online. Horario y plazas sujetos a confirmación. No se guarda una reserva al rellenar este formulario.</p>
+        </div>
+      </form>
+    </div>
+    <noscript><p>Activa JavaScript para ver la previsión y preparar tu solicitud, o <a href={contact.whatsapp}>contacta con la escuela por WhatsApp</a>.</p></noscript>
+  </div>
+</section>
+<script>
+  import '../scripts/surf-booking';
+</script>
+<style>
+  .surf-booking { background: var(--color-sea-quiet); scroll-margin-top: 76px; }
+  .eyebrow { font-size: 0.875rem; font-weight: 800; letter-spacing: .14em; margin-bottom: 18px; }
+  .booking-heading { display: grid; grid-template-columns: 1fr .65fr; gap: 40px; align-items: end; margin-bottom: 40px; }
+  h2 { font-family: var(--font-display); font-size: clamp(2.8rem,6vw,5rem); letter-spacing: -.05em; line-height: 1; }
+  .booking-heading > p { max-width: 38ch; line-height: 1.7; color: var(--color-gray-600); }
+  .booking-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(28px,4vw,48px); }
+  .forecast-panel, .booking-form { padding: clamp(24px,4vw,48px); border-radius: var(--radius-card); background: white; min-width: 0; }
+  .forecast-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; justify-content: space-between; }
+  h3 { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: -.03em; }
+  .forecast-title span, [data-forecast-status], .forecast-source { font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.6; }
+  [data-forecast-status] { margin-block: 14px; }
+  .day-picker { display: flex; overflow-x: auto; gap: 7px; padding-bottom: 12px; }
+  .day-picker :global(button) { flex-shrink: 0; padding: 10px; border: 1px solid #737373; border-radius: 4px; background: white; color: #0a0a0a; font-size: 0.875rem; cursor: pointer; }
+  .day-picker :global(button[aria-pressed='true']) { background: #0a0a0a; color: white; border-color: #0a0a0a; }
+  .surf-summary { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); align-items: center; gap: 20px 48px; margin: 20px 0 32px; padding: clamp(24px,4vw,40px); background: #eef4f2; border-radius: 6px; color: #195d50; }
+  .surf-summary[data-level="Intermedio"] { background: #faf3e6; color: #805000; }
+  .surf-summary[data-level="Avanzado"], .surf-summary[data-level="Consultar escuela"] { background: #fcf0eb; color: #9a3d28; }
+  .surf-summary[data-level="Sin datos"], .surf-summary[data-level="Plato"] { background: #f3f4f4; color: #525b5c; }
+  .surf-summary__top { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .surf-summary__top > p { font-size: 0.875rem; font-weight: 650; }
+  .surf-summary__time { font-size: 1.2rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+  .wave-timeline { grid-column: 1 / -1; margin-top: 8px; }
+  .wave-timeline label { font-size: 0.875rem; font-weight: 650; }
+  .wave-timeline input { display: block; width: 100%; min-height: 44px; margin: 4px 0 0; padding: 0; border: 0; background: transparent; color: inherit; color-scheme: light; accent-color: currentColor; cursor: pointer; }
+  .wave-timeline input:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .wave-timeline__ticks { display: flex; justify-content: space-between; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+  .wave-timeline p { margin-top: 10px; font-size: 0.875rem; line-height: 1.5; }
+  [data-wave-shape], [data-wave-ruler], [data-wave-ruler-top], [data-wave-height] { transition: transform 180ms ease, y 180ms ease, y1 180ms ease, d 180ms ease; }
+  @media (prefers-reduced-motion: reduce) { [data-wave-shape], [data-wave-ruler], [data-wave-ruler-top], [data-wave-height] { transition: none; } }
+  .wave-picture { position: relative; min-width: 0; min-height: 140px; }
+  .wave-picture svg { display: block; width: 100%; height: auto; }
+  [data-wave-empty] { position: absolute; inset: 35% 10% auto; text-align: center; font-size: 0.875rem; line-height: 1.6; }
+  .surf-summary__level { font-family: var(--font-display); font-size: clamp(1.6rem,3vw,2.2rem); font-weight: 750; letter-spacing: -.03em; }
+  .surf-summary__copy { margin-top: 8px; font-size: 1rem; line-height: 1.6; }
+  .surf-summary__note { margin-top: 18px; font-size: 0.875rem; line-height: 1.6; }
+  .technical-forecast { padding-bottom: 16px; }
+  .technical-forecast .forecast-scroll { margin-top: 12px; }
+  .forecast-scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.875rem; white-space: nowrap; }
+  th { color: var(--color-gray-600); font-weight: 500; text-align: left; }
+  th, :global(td) { padding: 15px 9px; border-bottom: 1px solid #e5e5e5; }
+  :global(td[data-panorama]) { font-weight: 700; }
+  :global(td[data-panorama='Principiante']) { color: #176647; }
+  :global(td[data-panorama='Intermedio']) { color: #805000; }
+  :global(td[data-panorama='Avanzado']), :global(td[data-panorama='Consultar escuela']) { color: #a33020; }
+  .forecast-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-block: 22px; font-size: 0.875rem; }
+  details { font-size: 0.875rem; line-height: 1.7; border-top: 1px solid #e5e5e5; padding-top: 16px; }
+  details p { margin-top: 12px; color: var(--color-gray-600); }
+  summary { cursor: pointer; font-weight: 650; }
+  .forecast-source { margin-top: 18px; }
+  .booking-form { background: #0a0a0a; color: white; display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 36px 48px; align-items: start; }
+  .booking-form__heading { grid-column: 1 / -1; display: grid; gap: 12px; }
+  .booking-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; align-items: end; }
+  .booking-fields > label { grid-column: 1 / -1; }
+  .booking-actions { display: grid; grid-template-columns: minmax(0,1fr); gap: 24px; padding-left: 36px; border-left: 1px solid #444; align-self: stretch; align-content: start; min-width: 0; }
+  .booking-feedback { display: grid; gap: 16px; }
+  .booking-form .eyebrow { margin: 0; color: #c6dcd4; }
+  label { display: grid; gap: 8px; font-size: 0.875rem; min-width: 0; }
+  input, select { font-size: 1rem; width: 100%; min-width: 0; min-height: 46px; padding: 10px; border: 1px solid #777; border-radius: 4px; background: #262626; color: white; color-scheme: dark; }
+  .booking-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 44px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 12px 8px;
+  }
+  @media (forced-colors: active) {
+    .booking-form select { appearance: auto; -webkit-appearance: auto; background-image: none; }
+  }
+  .booking-form input:focus-visible, .booking-form select:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .form-pair { display: contents; }
+  .booking-form .button-link { border: 1px solid white; width: 100%; background: white; color: #0a0a0a; font-size: 0.875rem; cursor: pointer; text-align: center; }
+  .booking-estimate { font-weight: 650; font-size: 0.875rem; }
+  .booking-advice { font-size: 0.875rem; line-height: 1.6; padding-left: 12px; border-left: 2px solid #b7d6c8; }
+  .booking-note, [data-booking-review] p { font-size: 0.875rem; color: #ccc; line-height: 1.7; }
+  [data-booking-review] p { margin-block: 12px; }
+  [data-retry] { padding: 8px 16px; margin-bottom: 16px; cursor: pointer; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  @media(max-width: 1000px) { .surf-summary { column-gap: 28px; } }
+  @media(max-width: 900px) { .booking-form { grid-template-columns: minmax(0,1fr); } .booking-actions { padding-left: 0; padding-top: 28px; border-left: 0; border-top: 1px solid #444; } }
+  @media(max-width: 700px) { .booking-heading { grid-template-columns: 1fr; gap: 24px; } .surf-summary { grid-template-columns: minmax(0,1fr); gap: 24px; } .booking-actions { grid-template-columns: minmax(0,1fr); gap: 24px; } }
+  @media(max-width: 480px) { .wave-timeline__ticks span:nth-child(2), .wave-timeline__ticks span:nth-child(4) { display: none; } [data-wave-height] { font-size: 36px; } .booking-fields { grid-template-columns: minmax(0,1fr); } }
+</style>
