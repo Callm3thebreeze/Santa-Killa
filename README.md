@@ -81,14 +81,13 @@ No hace peticiones a proveedores desde el navegador ni requiere un servidor prop
 La ola y el slider conservan el comportamiento anterior; los días futuros empiezan
 a las 09:00. Los datos completos siguen disponibles en el desplegable.
 
-El alumno prepara y envía su solicitud por WhatsApp. La escuela confirma la plaza
-manualmente. No se guardan reservas ni se bloquean cupos en esta primera versión.
+El formulario está preparado para enviar solicitudes por correo desde el Worker; requiere activar el proveedor antes de publicarlo. La escuela confirma la plaza manualmente. WhatsApp sigue disponible como alternativa. Configuración y pruebas: [docs/booking-email.md](docs/booking-email.md). No se bloquean cupos en esta primera versión.
 
 **Activación, secretos, límites y mantenimiento:** [docs/forecast.md](docs/forecast.md).
 El JSON inicial está marcado como pendiente: no contiene previsiones ficticias.
 
 ```bash
-node --test tests/surf.test.mjs
+node --test tests/*.test.mjs
 python -m pip install -r scripts/forecast-requirements.txt
 python -m unittest discover -s tests -p 'test_*.py'
 python scripts/update_forecast.py

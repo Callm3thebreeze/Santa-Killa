@@ -7,7 +7,9 @@
     "deploy": "npm run build && wrangler deploy",
     "astro": "astro"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mimetext": "^3.0.28"
+  },
   "devDependencies": {
     "@astrojs/check": "latest",
     "astro": "latest",

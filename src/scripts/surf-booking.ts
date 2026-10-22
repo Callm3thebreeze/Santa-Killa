@@ -6,16 +6,18 @@ if (root) {
   const form = root.querySelector<HTMLFormElement>('[data-booking-form]')!;
   const date = form.elements.namedItem('date') as HTMLInputElement;
   const hour = form.elements.namedItem('hour') as HTMLSelectElement;
-  const level = form.elements.namedItem('level') as HTMLSelectElement;
   const people = form.elements.namedItem('people') as HTMLInputElement;
   const lesson = form.elements.namedItem('lesson') as HTMLSelectElement;
   const status = root.querySelector<HTMLElement>('[data-forecast-status]')!;
   const days = root.querySelector<HTMLElement>('[data-days]')!;
   const rows = root.querySelector<HTMLElement>('[data-forecast-rows]')!;
-  const advice = root.querySelector<HTMLElement>('[data-advice]')!;
   const retry = root.querySelector<HTMLButtonElement>('[data-retry]')!;
-  const review = root.querySelector<HTMLElement>('[data-booking-review]')!;
-  const link = root.querySelector<HTMLAnchorElement>('[data-booking-link]')!;
+  const result = root.querySelector<HTMLElement>('[data-booking-result]')!;
+  const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  let sending = false;
+  let lastPayload = '';
+  let requestId = '';
+  let sentPayload = '';
   const waveHour = root.querySelector<HTMLInputElement>('[data-wave-hour]')!;
   const today = () => localParts(Date.now()).date;
   date.min = today();
@@ -25,12 +27,7 @@ if (root) {
   let selectedDate = date.value;
   const readableDate = (value: string) => new Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', weekday: 'short', day: 'numeric', month: 'short' }).format(new Date(`${value}T12:00:00Z`));
   const format = (value: number | null, unit: string) => value === null ? '—' : `${value.toLocaleString('es-ES', { maximumFractionDigits: 1 })} ${unit}`;
-  const selectedForecast = () => forecast.find(item => {
-    const local = localParts(item.timestamp);
-    return local.date === date.value && local.hour === Number(hour.value.slice(0, 2));
-  });
   function update(syncWave = true) {
-    review.hidden = true;
     const minimum = date.value === today() ? Date.now() : 0;
     for (const option of hour.options) {
       // Compare Madrid wall time without depending on the visitor's timezone.
@@ -39,20 +36,12 @@ if (root) {
     }
     if (hour.selectedOptions[0]?.disabled) hour.value = Array.from(hour.options).find(o => !o.disabled)?.value ?? '';
     hour.setCustomValidity(hour.value ? '' : 'No quedan horas para hoy. Elige otro día.');
-    const selected = selectedForecast();
     if (syncWave && hour.value) waveHour.value = String(Number(hour.value.slice(0, 2)));
     const visualForecast = forecast.find(item => {
       const local = localParts(item.timestamp);
       return local.date === date.value && local.hour === Number(waveHour.value);
     });
     updateWave(visualForecast);
-    if (!selected) {
-      advice.textContent = 'Sin previsión disponible para esta hora. Puedes consultar la sesión con la escuela.';
-    } else {
-      const result = classify(selected);
-      const mismatch = ['Principiante', 'Intermedio', 'Avanzado'].indexOf(result.label) > ['Principiante', 'Intermedio', 'Avanzado'].indexOf(level.value);
-      advice.textContent = `${result.label} · ${result.reason}${mismatch ? ' La exigencia prevista supera tu nivel. Solicita una alternativa al monitor.' : ''} La escuela confirma si es adecuado para ti.`;
-    }
     const price = pricing[lesson.value === 'privada' ? 1 : 0].price;
     root!.querySelector<HTMLElement>('[data-price]')!.textContent = lesson.value === 'privada' ? `${price} · referencia para clase privada; confirmar precio del grupo` : `${price} · 1 h 30 min · total orientativo ${35 * (Number(people.value) || 1)} €`;
   }
@@ -65,11 +54,11 @@ if (root) {
     summary.dataset.level = result.label;
     root!.querySelector<HTMLElement>('[data-wave-date]')!.textContent = date.value ? readableDate(date.value) : 'Elige un día';
     const copy = {
-      'Plato': ['El mar está casi plano', 'Se espera muy poco oleaje. Consulta con la escuela si se puede dar clase o elegir otro momento.'],
-      'Principiante': ['Olas pequeñas · principiante', 'Un panorama de olas pequeñas para iniciarse. El monitor valorará el viento y la zona de práctica.'],
-      'Intermedio': ['Mar con más energía · intermedio', 'La sesión puede exigir más control de la tabla y experiencia cogiendo olas.'],
-      'Avanzado': ['Mar exigente · avanzado', 'Se prevé una sesión para surfistas con experiencia. Consulta las condiciones con el equipo.'],
-      'Consultar escuela': ['Mar para valorar con el equipo', 'El oleaje o el viento son exigentes. Habla con la escuela antes de elegir tu sesión.'],
+      'Plato': ['Plato', 'Se espera muy poco oleaje. Consulta con la escuela si se puede dar clase o elegir otro momento.'],
+      'Principiante': ['Principiante', 'Un panorama de olas pequeñas para iniciarse. El monitor valorará el viento y la zona de práctica.'],
+      'Intermedio': ['Intermedio', 'La sesión puede exigir más control de la tabla y experiencia cogiendo olas.'],
+      'Avanzado': ['Avanzado', 'Se prevé una sesión para surfistas con experiencia. Consulta las condiciones con el equipo.'],
+      'Consultar escuela': ['Consultar escuela', 'El oleaje o el viento son exigentes. Habla con la escuela antes de elegir tu sesión.'],
       'Sin datos': ['Sin previsión para esta hora', 'Puedes solicitar tu clase y preguntar al equipo por las condiciones.'],
     }[result.label];
     root!.querySelector<HTMLElement>('[data-wave-level]')!.textContent = copy[0];
@@ -140,6 +129,7 @@ if (root) {
   }
   async function refresh() {
     retry.hidden = true;
+    status.hidden = false;
     status.textContent = 'Consultando oleaje y viento…';
     try {
       const data = await loadForecast();
@@ -150,9 +140,11 @@ if (root) {
         status.textContent = 'La primera previsión está pendiente de descarga. Puedes consultar las condiciones con la escuela.';
       } else if (age === 'expired') {
         status.textContent = 'La previsión ha caducado. Consulta las condiciones actuales con la escuela.';
+      } else if (age === 'stale') {
+        status.textContent = 'Datos antiguos: confirma las condiciones con la escuela.';
       } else {
-        const updated = new Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(generatedAt!));
-        status.textContent = `${age === 'stale' ? 'Actualización pendiente · última previsión' : 'Previsión actualizada'}: ${updated}. ${age === 'stale' ? 'Datos antiguos: confirma las condiciones con la escuela.' : 'Descarga programada cada 6 horas.'}`;
+        status.textContent = '';
+        status.hidden = true;
       }
     } catch {
       forecast = [];
@@ -168,22 +160,43 @@ if (root) {
     selectedDate = date.value;
     render(); update();
   });
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
+    if (sending) return;
     date.min = today();
     update();
     if (!form.reportValidity()) return;
-    // Use the data generation time, never the visitor's fetch time.
-    const selected = forecastAge(generatedAt) === 'fresh' ? selectedForecast() : undefined;
-    const panorama = selected ? classify(selected).label : 'Sin previsión actual disponible';
-    const summary = `${readableDate(date.value)} (${date.value}), ${hour.value} (hora de El Palmar). Clase ${lesson.value === 'privada' ? 'privada' : 'en grupo'}, ${people.value} persona(s), nivel ${level.value}.`;
-    root!.querySelector<HTMLElement>('[data-booking-summary]')!.textContent = summary;
-    const message = `¡Hola, Santa Killa! Quiero solicitar una clase de surf.\n${summary}\nPanorama orientativo: ${panorama}.\n¿Podéis confirmar disponibilidad, condiciones y precio? Entiendo que esta solicitud está pendiente de vuestra confirmación.`;
-    const url = new URL(root!.dataset.whatsapp!);
-    url.searchParams.set('text', message);
-    link.href = url.toString();
-    review.hidden = false;
-    link.focus();
+    const fields = Object.fromEntries(new FormData(form).entries());
+    const payload = JSON.stringify(fields);
+    if (payload === sentPayload) {
+      result.textContent = 'Esta solicitud ya se ha enviado. La escuela te responderá por correo.';
+      result.hidden = false;
+      result.focus();
+      return;
+    }
+    if (payload !== lastPayload) { requestId = crypto.randomUUID(); lastPayload = payload; }
+    sending = true;
+    submit.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    result.hidden = false;
+    result.textContent = 'Enviando tu solicitud…';
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...fields, requestId }), signal: AbortSignal.timeout(20000),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(typeof data.message === 'string' ? data.message : 'No se ha podido enviar. Inténtalo más tarde.');
+      sentPayload = payload;
+      result.textContent = data.message;
+    } catch (error) {
+      result.textContent = error instanceof Error && error.name === 'Error' ? error.message : 'No se ha podido confirmar el envío. Contacta con la escuela antes de volver a enviarlo para evitar duplicados.';
+    } finally {
+      sending = false;
+      submit.disabled = false;
+      form.removeAttribute('aria-busy');
+      result.focus();
+    }
   });
   update();
   void refresh();

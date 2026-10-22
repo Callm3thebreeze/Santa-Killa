@@ -47,7 +47,7 @@ jobs:
       - name: Comprobar transformación de datos
         run: |
           python -m unittest discover -s tests -p 'test_*.py'
-          node --test tests/surf.test.mjs
+          node --test tests/*.test.mjs
       - name: Descargar y validar previsión
         env:
           COPERNICUSMARINE_SERVICE_USERNAME: ${{ secrets.COPERNICUSMARINE_SERVICE_USERNAME }}

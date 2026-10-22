@@ -9,3 +9,7 @@ __pycache__/
 *.pyc
 .venv/
 .copernicusmarine/
+
+.dev.vars
+.dev.vars.*
+.wrangler/

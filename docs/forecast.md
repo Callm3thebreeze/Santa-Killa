@@ -84,7 +84,7 @@ anterior hasta el siguiente despliegue correcto.
 
 - Más de 18 horas desde `generatedAt`: aviso de datos antiguos.
 - Más de 48 horas: se oculta la previsión y se remite a la escuela.
-- Las solicitudes de WhatsApp solo incluyen un panorama si los datos tienen ≤18 horas.
+- La previsión orienta al alumno; las solicitudes por correo contienen los datos de clase y contacto, sin presentar la previsión como confirmación de las condiciones.
 - Sin primera descarga: se muestra el estado pendiente y sigue funcionando la solicitud.
 
 GitHub envía sus notificaciones normales ante fallos. En repositorios públicos puede
@@ -112,6 +112,6 @@ entrada privada. Ejecutar `python scripts/update_forecast.py`; después `npm run
 No hace falta desplegar para revisar el JSON y la interfaz.
 
 Pruebas: `python -m unittest discover -s tests -p 'test_*.py'`,
-`node --test tests/surf.test.mjs` y `npm run build`.
+`node --test tests/*.test.mjs` y `npm run build`.
 Las pruebas usan datos sintéticos solo en memoria: no generan una previsión ficticia
 para servir a los visitantes. La prueba autenticada del modelo IBI requiere la cuenta.
