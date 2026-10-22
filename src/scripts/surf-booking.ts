@@ -1,4 +1,4 @@
-import { cardinal, classify, forecastAge, loadForecast, localParts, type SurfHour } from '../lib/surf';
+import { thresholds, cardinal, classify, forecastAge, loadForecast, localParts, type SurfHour } from '../lib/surf';
 import { pricing } from '../data/pricing';
 
 const root = document.querySelector<HTMLElement>('[data-surf-booking]');
@@ -69,9 +69,16 @@ if (root) {
     if (hasHeight && selected) {
       const height = selected.height!;
       // Illustration only: bounded for legibility, not an absolute physical scale.
-      const scale = height < .3 ? Math.max(.04, height / 2) : .4 + .6 * Math.min(1, height / 2);
+      const scale = height < thresholds.flat ? Math.max(0, height / 2) : .4 + .6 * Math.min(1, height / 2);
       const top = 180 - 137 * scale;
-      root!.querySelector('[data-wave-shape]')!.setAttribute('transform', `translate(0 ${180 * (1 - scale)}) scale(1 ${scale})`);
+      const flat = height < thresholds.flat;
+      const transform = `translate(0 ${180 * (1 - scale)}) scale(1 ${scale})`;
+      const breakingWave = root!.querySelector('[data-wave-shape]')!;
+      const flatSea = root!.querySelector('[data-wave-flat-shape]')!;
+      breakingWave.setAttribute('visibility', flat ? 'hidden' : 'visible');
+      flatSea.setAttribute('visibility', flat ? 'visible' : 'hidden');
+      breakingWave.setAttribute('transform', transform);
+      flatSea.setAttribute('transform', transform);
       root!.querySelector('[data-wave-ruler]')!.setAttribute('y1', String(top));
       root!.querySelector('[data-wave-ruler-top]')!.setAttribute('d', `M56 ${top} H68`);
       const label = root!.querySelector('[data-wave-height]')!;

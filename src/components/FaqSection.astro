@@ -9,14 +9,13 @@ import { faqs } from "@data/faqs";
       <SectionHeading
         eyebrow="Preguntas frecuentes"
         title="Antes de reservar tu clase de surf"
-        intro="Resolvemos las dudas habituales para que llegues a El Palmar con todo claro y puedas centrarte en disfrutar del agua."
       />
     </div>
 
     <div class="faq__items" data-reveal>
       {
         faqs.map((item, index) => (
-          <details class="faq__item" open={index === 0}>
+          <details class="faq__item" name="santa-killa-faq" open={index === 0}>
             <summary>{item.question}</summary>
             <p>{item.answer}</p>
           </details>
@@ -35,11 +34,12 @@ import { faqs } from "@data/faqs";
   }
 
   .faq__items {
-    display: grid;
+    display: block;
     border-top: 1px solid rgba(10, 10, 10, 0.12);
   }
 
   .faq__item {
+    overflow: hidden;
     border-bottom: 1px solid rgba(10, 10, 10, 0.12);
   }
 

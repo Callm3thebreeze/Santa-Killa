@@ -4,7 +4,7 @@ import { thresholds } from '../lib/surf';
 ---
 <section id="reservas" class="surf-booking section" data-surf-booking>
   <div class="container">
-    <p class="eyebrow">EL PALMAR · PLANIFICA TU SESIÓN</p>
+    <p class="eyebrow">PLANIFICA TU SESIÓN</p>
     <div class="booking-heading">
       <h2>Tu próxima ola<br />empieza aquí.</h2>
       <p>Consulta el mar, elige cuándo venir y solicita tu clase. Nuestro equipo confirma la hora y la plaza según las condiciones reales.</p>
@@ -30,6 +30,10 @@ import { thresholds } from '../lib/surf';
                   <path d="M105 180 C155 180 164 154 187 108 C214 54 266 28 317 43 C345 51 360 75 353 96 C343 80 318 77 305 94 C284 120 324 157 367 171 C384 177 402 180 420 180 Z" fill="currentColor" opacity=".15" />
                   <path d="M105 180 C155 180 164 154 187 108 C214 54 266 28 317 43 C345 51 360 75 353 96 C343 80 318 77 305 94 C284 120 324 157 367 171 C384 177 402 180 420 180" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" />
                 </g>
+                <g data-wave-flat-shape visibility="hidden">
+                  <path d="M105 180 C165 180 199 43 262 43 C325 43 359 180 420 180 Z" fill="currentColor" opacity=".15" />
+                  <path d="M105 180 C165 180 199 43 262 43 C325 43 359 180 420 180" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+                </g>
                 <line data-wave-ruler x1="62" y1="43" x2="62" y2="180" stroke="currentColor" stroke-width="1.5" />
                 <path data-wave-ruler-top d="M56 43 H68" fill="none" stroke="currentColor" stroke-width="1.5" />
                 <path d="M56 180 H68" stroke="currentColor" stroke-width="1.5" />
@@ -41,7 +45,7 @@ import { thresholds } from '../lib/surf';
           <div class="surf-summary__description">
           <p class="surf-summary__level" data-wave-level>Sin previsión disponible</p>
           <p class="surf-summary__copy" data-wave-copy>Selecciona un día y una hora para consultar las condiciones.</p>
-          <p class="surf-summary__note">Altura estimada del oleaje, no de la ola al romper. Dibujo orientativo; la escuela confirma las condiciones.</p>
+          <p class="surf-summary__note">Altura estimada del oleaje; la escuela confirma las condiciones.</p>
           </div>
           <div class="wave-timeline">
             <label for="wave-hour">Desliza para ver cómo cambia el mar</label>
@@ -102,7 +106,7 @@ import { thresholds } from '../lib/surf';
 </script>
 <style>
   .surf-booking { background: var(--color-sea-quiet); scroll-margin-top: 76px; }
-  .eyebrow { font-size: 0.875rem; font-weight: 800; letter-spacing: .14em; margin-bottom: 18px; }
+  .eyebrow { font-family: var(--font-accent); font-size: 0.875rem; font-weight: 400; letter-spacing: .14em; margin-bottom: 18px; }
   .booking-heading { display: grid; grid-template-columns: 1fr .65fr; gap: 40px; align-items: end; margin-bottom: 40px; }
   h2 { font-family: var(--font-display); font-size: clamp(2.8rem,6vw,5rem); letter-spacing: -.05em; line-height: 1; }
   .booking-heading > p { max-width: 38ch; line-height: 1.7; color: var(--color-gray-600); }
@@ -128,8 +132,8 @@ import { thresholds } from '../lib/surf';
   .wave-timeline input:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   .wave-timeline__ticks { display: flex; justify-content: space-between; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
   .wave-timeline p { margin-top: 10px; font-size: 0.875rem; line-height: 1.5; }
-  [data-wave-shape], [data-wave-ruler], [data-wave-ruler-top], [data-wave-height] { transition: transform 180ms ease, y 180ms ease, y1 180ms ease, d 180ms ease; }
-  @media (prefers-reduced-motion: reduce) { [data-wave-shape], [data-wave-ruler], [data-wave-ruler-top], [data-wave-height] { transition: none; } }
+  [data-wave-shape], [data-wave-flat-shape], [data-wave-ruler], [data-wave-ruler-top], [data-wave-height] { transition: transform 180ms ease, y 180ms ease, y1 180ms ease, d 180ms ease; }
+  @media (prefers-reduced-motion: reduce) { [data-wave-shape], [data-wave-flat-shape], [data-wave-ruler], [data-wave-ruler-top], [data-wave-height] { transition: none; } }
   .wave-picture { position: relative; min-width: 0; min-height: 140px; }
   .wave-picture svg { display: block; width: 100%; height: auto; }
   [data-wave-empty] { position: absolute; inset: 35% 10% auto; text-align: center; font-size: 0.875rem; line-height: 1.6; }
